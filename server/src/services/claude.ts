@@ -1,7 +1,18 @@
 import Anthropic from '@anthropic-ai/sdk';
 import { InterviewRequest, ClaudeResponse } from '../types';
 
-const client = new Anthropic();
+let client: Anthropic | null = null;
+
+function getClient(): Anthropic {
+  if (!client) {
+    const apiKey = process.env.ANTHROPIC_API_KEY;
+    if (!apiKey) {
+      throw new Error('ANTHROPIC_API_KEY is not set in environment variables. Check server/.env');
+    }
+    client = new Anthropic({ apiKey });
+  }
+  return client;
+}
 
 const SYSTEM_PROMPT = `You are an AI investment questionnaire assistant. You MUST respond with valid JSON ONLY — no markdown fences, no explanatory text, no commentary. Output a single JSON object and nothing else.
 
@@ -92,7 +103,7 @@ export async function processInterview(
 ): Promise<ClaudeResponse> {
   const userMessage = buildUserMessage(request);
 
-  const response = await client.messages.create({
+  const response = await getClient().messages.create({
     model: 'claude-sonnet-4-5-20250929',
     max_tokens: 1024,
     system: SYSTEM_PROMPT,
@@ -106,7 +117,7 @@ export async function processInterview(
     return parseClaudeResponse(text);
   } catch {
     // Retry once with repair prompt
-    const retryResponse = await client.messages.create({
+    const retryResponse = await getClient().messages.create({
       model: 'claude-sonnet-4-5-20250929',
       max_tokens: 1024,
       system: SYSTEM_PROMPT,
