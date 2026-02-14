@@ -1,0 +1,20 @@
+{
+  "expo": {
+    "name": "Voice Investment Questionnaire",
+    "slug": "voice-investment-questionnaire",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.voiceinvestment.app"
+    },
+    "android": {
+      "package": "com.voiceinvestment.app",
+      "adaptiveIcon": {
+        "backgroundColor": "#1a73e8"
+      }
+    },
+    "plugins": []
+  }
+}

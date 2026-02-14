@@ -1,0 +1,29 @@
+node_modules/
+dist/
+.expo/
+web-build/
+*.jks
+*.p8
+*.p12
+*.key
+*.mobileprovision
+*.orig.*
+
+# Environment files with secrets
+server/.env
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+
+# Temp
+*.log
+
+# Existing non-project files
+~$*.docx
+IPS.docx
+.claude/
